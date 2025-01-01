@@ -14,8 +14,6 @@ class Animal
     #[ORM\Column]
     private ?int $id = null;
 
-
-
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
@@ -28,8 +26,22 @@ class Animal
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $anniversaire = null;
 
-    #[ORM\ManyToOne(inversedBy: 'animaux')]
+    #[ORM\ManyToOne(inversedBy: 'animal')]
     private ?Race $race = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $allergies = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $caractere = null;
+
+    #[ORM\ManyToOne(targetEntity: Maitre::class, inversedBy: 'animal')]
+    private ?Maitre $maitre = null;
+
+    public function __construct()
+    {
+    }
+
 
     public function getId(): ?int
     {
@@ -92,6 +104,42 @@ class Animal
     public function setRace(?Race $race): static
     {
         $this->race = $race;
+
+        return $this;
+    }
+
+    public function getAllergies(): ?string
+    {
+        return $this->allergies;
+    }
+
+    public function setAllergies(?string $allergies): static
+    {
+        $this->allergies = $allergies;
+
+        return $this;
+    }
+
+    public function getCaractere(): ?string
+    {
+        return $this->caractere;
+    }
+
+    public function setCaractere(?string $caractere): static
+    {
+        $this->caractere = $caractere;
+
+        return $this;
+    }
+
+    public function getMaitre(): ?Maitre
+    {
+        return $this->maitre;
+    }
+
+    public function setMaitre(?Maitre $maitre): static
+    {
+        $this->maitre = $maitre;
 
         return $this;
     }

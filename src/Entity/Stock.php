@@ -22,6 +22,11 @@ class Stock
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
+    public function __construct()
+    {
+
+    }
+
     public function getId(): ?int
     {
         return $this->id;

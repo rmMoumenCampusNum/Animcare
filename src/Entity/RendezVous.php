@@ -27,6 +27,11 @@ class RendezVous
     #[ORM\JoinColumn(nullable: false)]
     private ?Animal $animal = null;
 
+    public function __construct()
+    {
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
