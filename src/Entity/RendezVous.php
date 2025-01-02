@@ -27,6 +27,10 @@ class RendezVous
     #[ORM\JoinColumn(nullable: false)]
     private ?Animal $animal = null;
 
+    #[ORM\ManyToOne(inversedBy: 'rendezVous')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Maitre $maitre = null;
+
     public function __construct()
     {
     }
@@ -81,6 +85,18 @@ class RendezVous
     public function setAnimal(?Animal $animal): static
     {
         $this->animal = $animal;
+
+        return $this;
+    }
+
+    public function getMaitre(): ?Maitre
+    {
+        return $this->maitre;
+    }
+
+    public function setMaitre(?Maitre $maitre): static
+    {
+        $this->maitre = $maitre;
 
         return $this;
     }

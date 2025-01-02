@@ -43,10 +43,17 @@ class Maitre
     #[ORM\Column(nullable: true)]
     private ?int $telephone = null;
 
+    /**
+     * @var Collection<int, RendezVous>
+     */
+    #[ORM\OneToMany(targetEntity: RendezVous::class, mappedBy: 'maitre', orphanRemoval: true)]
+    private Collection $rendezVous;
+
     public function __construct()
     {
         $this->animal = new ArrayCollection();
         $this->dateCreation = \DateTimeImmutable::createFromFormat('Y-m-d', date('Y-m-d'));
+        $this->rendezVous = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -163,6 +170,36 @@ class Maitre
     public function setTelephone(?int $telephone): static
     {
         $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, RendezVous>
+     */
+    public function getRendezVous(): Collection
+    {
+        return $this->rendezVous;
+    }
+
+    public function addRendezVou(RendezVous $rendezVou): static
+    {
+        if (!$this->rendezVous->contains($rendezVou)) {
+            $this->rendezVous->add($rendezVou);
+            $rendezVou->setMaitre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRendezVou(RendezVous $rendezVou): static
+    {
+        if ($this->rendezVous->removeElement($rendezVou)) {
+            // set the owning side to null (unless already changed)
+            if ($rendezVou->getMaitre() === $this) {
+                $rendezVou->setMaitre(null);
+            }
+        }
 
         return $this;
     }
