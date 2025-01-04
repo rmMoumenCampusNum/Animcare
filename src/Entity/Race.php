@@ -25,11 +25,11 @@ class Race
      * @var Collection<int, Animal>
      */
     #[ORM\OneToMany(targetEntity: Animal::class, mappedBy: 'race')]
-    private Collection $animal;
+    private Collection $animaux;
 
     public function __construct()
     {
-        $this->animal = new ArrayCollection();
+        $this->animaux = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -64,15 +64,15 @@ class Race
     /**
      * @return Collection<int, Animal>
      */
-    public function getAnimal(): Collection
+    public function getAnimaux(): Collection
     {
-        return $this->animal;
+        return $this->animaux;
     }
 
     public function addAnimaux(Animal $animaux): static
     {
-        if (!$this->animal->contains($animaux)) {
-            $this->animal->add($animaux);
+        if (!$this->animaux->contains($animaux)) {
+            $this->animaux->add($animaux);
             $animaux->setRace($this);
         }
 
@@ -81,7 +81,7 @@ class Race
 
     public function removeAnimaux(Animal $animal): static
     {
-        if ($this->animal->removeElement($animal)) {
+        if ($this->animaux->removeElement($animal)) {
             // set the owning side to null (unless already changed)
             if ($animal->getRace() === $this) {
                 $animal->setRace(null);
